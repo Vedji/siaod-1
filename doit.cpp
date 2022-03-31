@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -83,9 +83,11 @@ void Deleting_finished_tours(Tours arr[SIZE_OF_TRIP], int size_init_array, strin
     }
 }
 
-void Available_tours(Tours arr[SIZE_OF_TRIP], int size_init_array, int tour_price) {
-    for (int i = 0; i < size_init_array - 1; i++) {
-        cout << arr[i].cost_of_tour;
+void Available_tours(Tours arr[SIZE_OF_TRIP], int size_init_array, int tour_price, Tours available[SIZE_OF_TRIP], int*len_vailable) {
+    for (int i = 0; i < size_init_array; i++) {
+        if (arr[i].cost_of_tour > tour_price)
+            continue;
+        available[(*len_vailable)++] = arr[i];
     }
 }
 
@@ -122,11 +124,12 @@ int main()
             break;
         case 5:
             cout << "По какой цене желаете отправиться в тур? " << endl;
-            int tour_price;
+            int tour_price, available_tours_size = 0;
             cin >> tour_price;
-            Available_tours(arr, size_init_array, tour_price);
+            Tours available_tours_arr[SIZE_OF_TRIP];
+            Available_tours(arr, size_init_array, tour_price, available_tours_arr, &available_tours_size);
             cout << "Доступные туры: " << endl;
-            showData(arr, size_init_array);
+            showData(available_tours_arr, available_tours_size);
             break;
         }
     }
